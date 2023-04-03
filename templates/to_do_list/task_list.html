@@ -22,7 +22,15 @@
             <button type="submit" class="btn btn-success  btn-lg float-right">Complete</button>
           {% endif %}
           </form>
-        <p>Created: {{ task.datetime }}</p>
+        <p>
+          Created: {{ task.datetime }}
+          
+          {% if task.deadline %}
+            Deadline: {{ task.deadline }}
+          {% endif %}
+            
+          
+        </p>
         <p>Tags: 
         {% for tag in task.tags.all %}
         <text style="color: grey">{{ tag.name }}</text>
