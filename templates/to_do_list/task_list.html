@@ -11,13 +11,17 @@
     {% for task in task_list %}
     <hr>
       <li>
+        <form action="{% url "to_do_list:update-is-done" pk=task.id %}" method="post">
+          {% csrf_token %}
         <p><strong>{{ task.content }}</strong>
           {% if task.done %}
-            <text style="color: green"> Done</text>
-            <button type="submit" class="btn btn-secondary">Undo</button>
+            <strong><text style="color: green"> Done</text></strong>
+            <button type="submit" class="btn btn-secondary btn-lg float-right">Undo</button>
           {% else %}
-          <button type="submit" class="btn btn-succes">Complete</button>
+            <strong><text style="color: red"> Not done</text></strong>
+            <button type="submit" class="btn btn-success  btn-lg float-right">Complete</button>
           {% endif %}
+          </form>
         <p>Created: {{ task.datetime }}</p>
         <p>Tags: 
         {% for tag in task.tags.all %}

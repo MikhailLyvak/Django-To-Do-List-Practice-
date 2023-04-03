@@ -1,7 +1,7 @@
 from typing import Any, Dict
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -53,3 +53,10 @@ class TaskUpdateView(generic.UpdateView):
 class TaskDeleteView(generic.DeleteView):
     model = Task
     success_url = reverse_lazy("to_do_list:tasks-list")
+    
+def update_is_done(request, pk=None):
+    if request.method == "POST" and pk is not None:
+        task = Task.objects.get(pk=pk)
+        task.done = not task.done
+        task.save()
+    return redirect("to_do_list:tasks-list")
